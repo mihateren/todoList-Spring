@@ -3,7 +3,6 @@ package com.example.todolist.service;
 import com.example.todolist.domain.user.User;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface UserService {
     User getById(Long id);
 

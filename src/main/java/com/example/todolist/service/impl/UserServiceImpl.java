@@ -2,7 +2,9 @@ package com.example.todolist.service.impl;
 
 import com.example.todolist.domain.user.User;
 import com.example.todolist.service.UserService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
     @Override
     public User getById(Long id) {

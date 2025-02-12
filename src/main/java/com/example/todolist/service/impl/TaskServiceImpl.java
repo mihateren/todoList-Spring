@@ -2,9 +2,11 @@ package com.example.todolist.service.impl;
 
 import com.example.todolist.domain.task.Task;
 import com.example.todolist.service.TaskService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TaskServiceImpl implements TaskService {
     @Override
     public Task getById(Long id) {
