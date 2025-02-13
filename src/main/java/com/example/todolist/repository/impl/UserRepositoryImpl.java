@@ -1,13 +1,14 @@
 package com.example.todolist.repository.impl;
 
 import com.example.todolist.domain.exception.ResourceMappingException;
-import com.example.todolist.domain.exception.ResourceNotFoundException;
 import com.example.todolist.domain.user.Role;
 import com.example.todolist.domain.user.User;
 import com.example.todolist.repository.DataSourceConfig;
 import com.example.todolist.repository.UserRepository;
 import com.example.todolist.repository.mappers.UserRowMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -29,7 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
                    u.password        as user_password,
                    ur.role           as user_role_role,
                    t.id              as task_id,
-                   t.name            as task_name,
+                   t.title            as task_title,
                    t.description     as task_description,
                    t.expiration_date as task_expiration_date,
                    t.status          as task_status
@@ -91,13 +92,19 @@ public class UserRepositoryImpl implements UserRepository {
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             statement.setLong(1, id);
+
             try (ResultSet resultSet = statement.executeQuery()) {
-                return Optional.ofNullable(UserRowMapper.mapRow(resultSet));
+                if (resultSet.next()) {
+                    return Optional.of(UserRowMapper.mapRow(resultSet));
+                }
             }
-        } catch (SQLException throwables) {
+            return Optional.empty();
+
+        } catch (SQLException throwable) {
             throw new ResourceMappingException("Error while finding user by id: " + id);
         }
     }
+
 
     @Override
     public Optional<User> findByUsername(String username) {
