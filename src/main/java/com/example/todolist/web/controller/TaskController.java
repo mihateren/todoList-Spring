@@ -6,6 +6,8 @@ import com.example.todolist.web.dto.task.TaskDto;
 import com.example.todolist.web.dto.validation.OnUpdate;
 import com.example.todolist.web.mappers.TaskMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +21,16 @@ public class TaskController {
 
     private final TaskMapper taskMapper;
 
+    private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
+
+
     @GetMapping("/{id}")
     public TaskDto getTask(@PathVariable Long id) {
         Task task = taskService.getById(id);
-        return taskMapper.toDto(task);
+        logger.debug("Get task: {}", task);
+        TaskDto taskDto = taskMapper.toDto(task);
+        logger.debug("Mapped Task to TaskDto: {}", taskDto);
+        return taskDto;
     }
 
     @PutMapping
