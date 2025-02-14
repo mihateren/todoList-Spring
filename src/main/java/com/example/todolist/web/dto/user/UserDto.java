@@ -4,8 +4,11 @@ import com.example.todolist.web.dto.validation.OnCreate;
 import com.example.todolist.web.dto.validation.OnUpdate;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
+@Data
 public class UserDto {
 
     @NotNull(message = "Id must be not null", groups = OnUpdate.class)

@@ -12,6 +12,8 @@ import com.example.todolist.web.mappers.TaskMapper;
 import com.example.todolist.web.mappers.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +31,25 @@ public class UserController {
     private final UserMapper userMapper;
     private final TaskMapper taskMapper;
 
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+
     @GetMapping("/{id}")
     public UserDto getById(@PathVariable Long id) {
+        logger.info("Received request to get user with id: {}", id);
+
         User user = userService.getById(id);
-        return userMapper.toDto(user);
+
+        if (user == null) {
+            logger.warn("User with id {} not found", id);
+        } else {
+            logger.info("User with id {} found: {}", id, user);
+        }
+
+        UserDto userDto = userMapper.toDto(user);
+        logger.info("Mapped user to UserDto: {}", userDto);
+
+        return userDto;
     }
 
     @GetMapping("/{id}/tasks")
