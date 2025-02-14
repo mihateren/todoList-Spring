@@ -3,6 +3,7 @@ package com.example.todolist.web.controller;
 import com.example.todolist.domain.task.Task;
 import com.example.todolist.service.TaskService;
 import com.example.todolist.web.dto.task.TaskDto;
+import com.example.todolist.web.dto.validation.OnCreate;
 import com.example.todolist.web.dto.validation.OnUpdate;
 import com.example.todolist.web.mappers.TaskMapper;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,13 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         taskService.delete(id);
+    }
+
+    @PostMapping("/{id}")
+    public TaskDto createTask(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody TaskDto taskDto) {
+        Task task = taskMapper.toEntity(taskDto);
+        Task createdTask = taskService.create(task, id);
+        return taskMapper.toDto(createdTask);
     }
 
 }
