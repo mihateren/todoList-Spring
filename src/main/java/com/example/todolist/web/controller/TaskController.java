@@ -7,6 +7,7 @@ import com.example.todolist.web.dto.validation.OnCreate;
 import com.example.todolist.web.dto.validation.OnUpdate;
 import com.example.todolist.web.mappers.TaskMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/tasks")
+@RequestMapping("/tasks")
 @RequiredArgsConstructor
 @Validated
 @Tag(name = "Task Controller", description = "Task API")
@@ -54,7 +55,12 @@ public class TaskController {
 
     @PostMapping("/{id}")
     @Operation(summary = "Create task by userId")
-    public TaskDto createTask(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody TaskDto taskDto) {
+    public TaskDto createTask(
+            @Parameter(description = "User ID to associate the task with")
+            @PathVariable Long id,
+            @Validated(OnCreate.class)
+            @RequestBody TaskDto taskDto
+    ) {
         Task task = taskMapper.toEntity(taskDto);
         Task createdTask = taskService.create(task, id);
         return taskMapper.toDto(createdTask);

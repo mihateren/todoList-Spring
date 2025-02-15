@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 @Validated
 @Tag(name = "User Controller", description = "User API")
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping
-    @Operation(summary = "Update task")
+    @Operation(summary = "Update user")
     public UserDto updateUser(@Validated(OnUpdate.class) @RequestBody UserDto userDto) {
         User user = userMapper.toEntity(userDto);
         User updatedUser = userService.update(user);

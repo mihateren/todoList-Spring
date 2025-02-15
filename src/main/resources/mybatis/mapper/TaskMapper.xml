@@ -34,7 +34,7 @@
         WHERE ut.user_id = #{userId}
     </select>
 
-    <insert id="assignToUserById">
+    <insert id="assignUserToTask">
         INSERT INTO users_tasks (task_id, user_id)
         VALUES (#{taskId}, #{userId})
     </insert>
