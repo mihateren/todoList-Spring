@@ -33,7 +33,7 @@
 1. Клонируйте репозиторий:
 
 ```bash
-git clone https://github.com/yourusername/todolist.git
+git clone https://github.com/mihateren/todoList-Spring.git
 ```
 
 2. Перейдите в директорию проекта:
