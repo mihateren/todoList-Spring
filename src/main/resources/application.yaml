@@ -17,3 +17,14 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: none
+  liquibase:
+    change-log: classpath:liquibase/db.changelog.yaml
+    enabled: true
+    default-schema: tasklist
+
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml
+springdoc:
+  override-with-generic-response: false
+  swagger-ui:
+    operations-sorter: method

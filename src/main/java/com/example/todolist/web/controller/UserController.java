@@ -10,6 +10,8 @@ import com.example.todolist.web.dto.validation.OnCreate;
 import com.example.todolist.web.dto.validation.OnUpdate;
 import com.example.todolist.web.mappers.TaskMapper;
 import com.example.todolist.web.mappers.UserMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -20,9 +22,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 @Validated
+@Tag(name = "User Controller", description = "User API")
 public class UserController {
 
     private final UserService userService;
@@ -35,6 +38,7 @@ public class UserController {
 
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get user info by id")
     public UserDto getById(@PathVariable Long id) {
         logger.info("Received request to get user with id: {}", id);
 
@@ -53,20 +57,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}/tasks")
+    @Operation(summary = "Get user tasks by id")
     public List<TaskDto> getTasksByUserId(@PathVariable Long id) {
         List<Task> tasks = taskService.getAllByUserId(id);
         return taskMapper.toDto(tasks);
     }
 
-    @PostMapping("/{id}/tasks")
-    public TaskDto createTask(@PathVariable Long id,
-                              @Validated(OnCreate.class) @RequestBody  TaskDto taskDto) {
-        Task task = taskMapper.toEntity(taskDto);
-        Task createdTask = taskService.create(task, id);
-        return taskMapper.toDto(createdTask);
-    }
-
     @PutMapping
+    @Operation(summary = "Update user")
     public UserDto updateUser(@Validated(OnUpdate.class) @RequestBody UserDto userDto) {
         User user = userMapper.toEntity(userDto);
         User updatedUser = userService.update(user);
@@ -74,6 +72,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete user")
     public void deleteById(@PathVariable Long id) {
         User user = userService.getById(id);
     }
