@@ -8,7 +8,7 @@ VALUES ('Купить продукты', 'Купить хлеб, молоко и
        ('Сделать домашку', 'Решить 5 задач по математике', 'IN_PROGRESS', '2025-02-14 23:59:59'),
        ('Позвонить клиенту', 'Обсудить условия контракта', 'DONE', NULL);
 
-INSERT INTO user_tasks (user_id, task_id)
+INSERT INTO users_tasks (user_id, task_id)
 VALUES (1, 1),
        (1, 2),
        (2, 2),

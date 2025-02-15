@@ -15,7 +15,7 @@ create table if not exists tasks
     expiration_date timestamp    null
 );
 
-create table if not exists user_tasks
+create table if not exists users_tasks
 (
     user_id bigint not null,
     task_id bigint not null,

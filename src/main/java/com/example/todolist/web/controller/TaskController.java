@@ -6,6 +6,8 @@ import com.example.todolist.web.dto.task.TaskDto;
 import com.example.todolist.web.dto.validation.OnCreate;
 import com.example.todolist.web.dto.validation.OnUpdate;
 import com.example.todolist.web.mappers.TaskMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/tasks")
 @RequiredArgsConstructor
 @Validated
+@Tag(name = "Task Controller", description = "Task API")
 public class TaskController {
 
     private final TaskService taskService;
@@ -26,6 +29,7 @@ public class TaskController {
 
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get task by id")
     public TaskDto getTask(@PathVariable Long id) {
         Task task = taskService.getById(id);
         logger.debug("Get task: {}", task);
@@ -35,6 +39,7 @@ public class TaskController {
     }
 
     @PutMapping
+    @Operation(summary = "Update task")
     public TaskDto updateTask(@Validated(OnUpdate.class) @RequestBody TaskDto taskDto) {
         Task task = taskMapper.toEntity(taskDto);
         Task updatedTask = taskService.update(task);
@@ -42,11 +47,13 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete task by id")
     public void deleteById(@PathVariable Long id) {
         taskService.delete(id);
     }
 
     @PostMapping("/{id}")
+    @Operation(summary = "Create task by userId")
     public TaskDto createTask(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody TaskDto taskDto) {
         Task task = taskMapper.toEntity(taskDto);
         Task createdTask = taskService.create(task, id);

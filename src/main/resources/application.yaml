@@ -24,3 +24,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
+springdoc:
+  override-with-generic-response: false
+  swagger-ui:
+    operations-sorter: method

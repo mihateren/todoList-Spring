@@ -34,7 +34,7 @@
         t.status as task_status
         FROM users u
         LEFT JOIN users_roles ur on u.id = ur.user_id
-        LEFT JOIN user_tasks ut on u.id = ut.user_id
+        LEFT JOIN users_tasks ut on u.id = ut.user_id
         LEFT JOIN tasks t on ut.task_id = t.id
         WHERE u.id = #{id}
     </select>
@@ -52,7 +52,7 @@
         t.status as task_status
         FROM users u
         LEFT JOIN users_roles ur on u.id = ur.user_id
-        LEFT JOIN user_tasks ut on u.id = ut.user_id
+        LEFT JOIN users_tasks ut on u.id = ut.user_id
         LEFT JOIN tasks t on ut.task_id = t.id
         WHERE u.username = #{username}
     </select>
@@ -78,7 +78,7 @@
     <select id="isTaskOwner" resultType="boolean">
         SELECT exists(
         SELECT 1
-        FROM user_tasks
+        FROM users_tasks
         WHERE user_id = #{userId}
         AND task_id = #{taskId}
         )
