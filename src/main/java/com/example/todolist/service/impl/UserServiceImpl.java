@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
             throw new IllegalStateException("Passwords do not match");
         }
         userRepository.create(user);
-        Set<Role> roles = Set.of(Role.ROLE_USER);
-        userRepository.insertUserRole(user.getId(), Role.ROLE_USER);
+        Set<Role> roles = Set.of(Role.USER);
+        userRepository.insertUserRole(user.getId(), Role.USER);
         return user;
     }
 
